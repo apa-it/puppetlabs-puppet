@@ -70,7 +70,8 @@ class puppet::master (
   $pluginsync                 = true,
   $parser                     = $::puppet::params::parser,
   $puppetdb_startup_timeout   = '60',
-  $puppetdb_strict_validation = $::puppet::params::puppetdb_strict_validation
+  $puppetdb_strict_validation = $::puppet::params::puppetdb_strict_validation,
+  $enc_script_location        = $::puppet::params::enc_script_location,
 ) inherits puppet::params {
 
   anchor { 'puppet::master::begin': }
@@ -234,6 +235,19 @@ class puppet::master (
     ensure  => present,
     setting => 'parser',
     value   => $parser,
+  }
+
+  if $enc_script_location != 'UNSET' {
+    ini_setting {'puppetmasternodeterminus':
+      ensure  => present,
+      setting => 'node_terminus',
+      value   => 'exec',
+    }    
+    ini_setting {'puppetmasterexternalnodes':
+      ensure  => present,
+      setting => 'external_nodes',
+      value   => $enc_script_location,
+    }  
   }
 
   if $reporturl != 'UNSET'{

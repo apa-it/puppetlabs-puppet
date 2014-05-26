@@ -29,6 +29,7 @@ class puppet::params {
   $apache_serveradmin               = 'root'
   $parser                           = 'current'
   $puppetdb_strict_validation       = true
+  $enc_script_location              = 'UNSET'
 
   case $::osfamily {
     RedHat: {

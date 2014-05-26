@@ -14,4 +14,7 @@ reporturl                 = http://<%= puppet_site %>:<%= dashboard_port %>/repo
 reporturl                 = http://<%= puppet_site %>/reports
 <%- end -%>
 <%- end -%>
-
+<%- if @enc_script_location -%>
+node_terminus = exec
+external_nodes = <%= @enc_script_location %>
+<%- end -%>
